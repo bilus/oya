@@ -23,8 +23,6 @@ Scenario: Successful run task
   """
   And file ./OK exists
 
-
-@xxx
 Scenario: Nested Oyafiles
   Given file ./Oyafile containing
     """

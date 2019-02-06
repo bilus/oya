@@ -9,8 +9,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
-	"testing"
-	"time"
 
 	"github.com/DATA-DOG/godog"
 	"github.com/DATA-DOG/godog/gherkin"
@@ -19,21 +17,6 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )
-
-func TestMain(m *testing.M) {
-	status := godog.RunWithOptions("oya", func(s *godog.Suite) {
-		FeatureContext(s)
-	}, godog.Options{
-		Format:    "progress",
-		Paths:     []string{"features"},
-		Randomize: time.Now().UTC().UnixNano(), // randomize scenario execution order
-	})
-
-	if st := m.Run(); st > status {
-		status = st
-	}
-	os.Exit(status)
-}
 
 type SuiteContext struct {
 	projectDir string

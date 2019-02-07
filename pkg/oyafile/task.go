@@ -34,9 +34,13 @@ func (t ScriptedTask) SplitName() (string, string) {
 	return splitTaskName(t.Name)
 }
 
-func (t ScriptedTask) IsBuiltIn() bool {
-	firstChar := t.Name[0:1]
+func IsBuiltIn(key string) bool {
+	firstChar := key[0:1]
 	return firstChar == strings.ToUpper(firstChar)
+}
+
+func (t ScriptedTask) IsBuiltIn() bool {
+	return IsBuiltIn(t.Name)
 }
 
 type BuiltinTask struct {

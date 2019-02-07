@@ -6,6 +6,7 @@ import (
 
 	"github.com/bilus/oya/pkg/raw"
 	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 func Parse(raw *raw.Oyafile) (*Oyafile, error) {
@@ -39,8 +40,18 @@ func Parse(raw *raw.Oyafile) (*Oyafile, error) {
 			if err != nil {
 				return nil, errors.Wrapf(err, "error parsing key %q", name)
 			}
+		case "Changeset":
+			err := parseTask(name, value, oyafile)
+			if err != nil {
+				return nil, errors.Wrapf(err, "error parsing key %q", name)
+			}
 		default:
-			err := parseUserTask(name, value, oyafile)
+			if IsBuiltIn(name) {
+				log.Debugf("WARNING: Unrecognized built-in task or directive %q; skipping.", name)
+				continue
+			}
+
+			err := parseTask(name, value, oyafile)
 			if err != nil {
 				return nil, errors.Wrapf(err, "error parsing key %q", name)
 			}
@@ -123,7 +134,7 @@ func parseIgnore(value interface{}, o *Oyafile) error {
 	return nil
 }
 
-func parseUserTask(name string, value interface{}, o *Oyafile) error {
+func parseTask(name string, value interface{}, o *Oyafile) error {
 	s, ok := value.(string)
 	if !ok {
 		return fmt.Errorf("expected a script, actual: %v", name)

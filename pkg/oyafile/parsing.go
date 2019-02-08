@@ -56,7 +56,8 @@ func Parse(raw *raw.Oyafile) (*Oyafile, error) {
 			}
 
 		default:
-			if IsBuiltIn(name) {
+			taskName := task.Name(name)
+			if taskName.IsBuiltIn() {
 				log.Debugf("WARNING: Unrecognized built-in task or directive %q; skipping.", name)
 				continue
 			}

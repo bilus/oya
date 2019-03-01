@@ -1,4 +1,4 @@
-# This repository has moved to github.com/tooploox/oya
+# This repository has moved to [github.com/tooploox/oya](https://github.com/tooploox/oya)
 
 # Oya
 

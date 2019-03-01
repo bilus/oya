@@ -1,3 +1,5 @@
+# This repository has moved to github.com/tooploox/oya
+
 # Oya
 
 ## Contributing
